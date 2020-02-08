@@ -1,0 +1,70 @@
+<template>
+    <lightning-tabset if:true={versionHistory} variant="scoped" >
+        <template for:each={versionHistory} for:item="oneHistoryItem" >
+            <lightning-tab key={oneHistoryItem.version} label={oneHistoryItem.versionName} >
+                <h2>
+                    Version Date: <lightning-formatted-date-time value={oneHistoryItem.versionDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                    minute="2-digit" second="2-digit" ></lightning-formatted-date-time>
+                </h2>
+                <div class="slds-m-top_x-small" >
+                    <div if:true={oneHistoryItem.isVersionOne} class="slds-align_absolute-center" >
+                        Published.
+                    </div>
+                    <!--todo: datatable lwc-->
+                    <table if:true={oneHistoryItem.hasChanges} class="slds-table slds-table_bordered slds-table_cell-buffer" role="grid" >
+                        <thead>
+                            <tr class="slds-text-title--caps">
+                                <th scope="col" style="width: 3.75rem;">
+                                </th>
+                                <th data-column-name="Field" scope="col">
+                                    <div class="slds-cell-wrap" title="Field" >
+                                        Field
+                                    </div>
+                                </th>
+                                <th data-column-name="From" scope="col">
+                                    <div class="slds-cell-wrap" title="From" >
+                                        From
+                                    </div>
+                                </th>
+                                <th data-column-name="To" scope="col">
+                                    <div class="slds-cell-wrap" title="To" >
+                                        To
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={oneHistoryItem.changes} for:item="oneChangeItem"  >
+                                <tr key={oneChangeItem.field} class="slds-hint-parent">
+                                    <td class="slds-cell-error slds-cell-edit" role="gridcell">
+                                        <span class="slds-row-number slds-text-body_small slds-text-color_weak"></span>
+                                    </td>
+                                    <td class="slds-cell-edit" role="gridcell">
+                                        <span class="slds-grid slds-grid_align-spread">
+                                            <span class="slds-cell-wrap" title={oneChangeItem.polishedFieldLabel} >{oneChangeItem.polishedFieldLabel}</span>
+                                        </span>
+                                    </td>
+                                    <td class="slds-cell-edit" role="gridcell">
+                                        <span class="slds-grid slds-grid_align-spread">
+                                            <span class="slds-cell-wrap" title={oneChangeItem.fromValue} >{oneChangeItem.fromValue}</span>
+                                        </span>
+                                    </td>
+                                    <td class="slds-cell-edit" role="gridcell">
+                                        <span class="slds-grid slds-grid_align-spread">
+                                            <span class="slds-cell-wrap" title={oneChangeItem.toValue} >{oneChangeItem.toValue}</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </template>
+</tbody>
+</table>
+<div if:false={oneHistoryItem.isVersionOne}>
+    <div if:false={oneHistoryItem.hasChanges} class="slds-align_absolute-center">
+        No Changes.
+    </div>
+</div>
+</div>
+</lightning-tab>
+</template>
+</lightning-tabset>
+</template>
