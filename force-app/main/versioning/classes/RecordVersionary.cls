@@ -1,11 +1,9 @@
-// https://airwallex.atlassian.net/browse/SF-463
 public with sharing class RecordVersionary {
     public final static List<String> ingoreFieldList = new List<String> {
         'Version__c', 'Version_Date__c', 'Version_Snapshot__c', 'Version_History__c',
         'LastReferencedDate', 'LastViewedDate', 'SystemModstamp', 'LastModifiedDate', 'CreatedDate' 
     };
 
-    // https://airwallex.atlassian.net/browse/SF-463
     public static Wrapper increaseVersion(Wrapper currentVersionData) {
         Wrapper newVersionData = new Wrapper();
         Map<String, Object> newRecordMap = currentVersionData.allFieldsRecord.getPopulatedFieldsAsMap().clone();
@@ -35,7 +33,7 @@ public with sharing class RecordVersionary {
             newVersionData.versionHistory = JSON.serialize(new List<HistoryItem> { version1Item });
         } else {
             Map<String, Object> currentRecordMap = (Map<String, Object>)JSON.deserializeUntyped(currentVersionData.versionSnapshot);
-            List<HistoryItem> currentHistories = (List<HistoryItem>)JSON.deserialize(currentVersionData.versionHistory, List<HistoryItem>.class);
+            List<Object> currentHistories = (List<Object>)JSON.deserializeUntyped(currentVersionData.versionHistory);
 
             HistoryItem history = new HistoryItem();
             history.version = newVersionData.version;
@@ -47,8 +45,8 @@ public with sharing class RecordVersionary {
             allFieldKeySet.addAll(currentRecordMap.keySet());
             for(String key : allFieldKeySet) {
                 if(!ingoreFieldList.contains(key)) {
-                    String currentValue = currentRecordMap.containsKey(key) ? String.valueOf(currentRecordMap.get(key)) : null;
-                    String newValue = newRecordMap.containsKey(key) ? String.valueOf(newRecordMap.get(key)) : null;
+                    Object currentValue = currentRecordMap.containsKey(key) ? currentRecordMap.get(key) : null;
+                    Object newValue = newRecordMap.containsKey(key) ? newRecordMap.get(key) : null;
                     
                     ChangedItem change = new ChangedItem();
                     if(newValue != currentValue) {
@@ -82,7 +80,7 @@ public with sharing class RecordVersionary {
 
     public class ChangedItem {
         public String field;
-        public String fromValue;
-        public String toValue;
+        public Object fromValue;
+        public Object toValue;
     }
 }

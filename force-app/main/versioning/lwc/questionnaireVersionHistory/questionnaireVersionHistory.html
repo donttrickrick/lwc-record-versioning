@@ -2,15 +2,17 @@
     <lightning-tabset if:true={versionHistory} variant="scoped" >
         <template for:each={versionHistory} for:item="oneHistoryItem" >
             <lightning-tab key={oneHistoryItem.version} label={oneHistoryItem.versionName} >
-                <h2>
-                    Version Date: <lightning-formatted-date-time value={oneHistoryItem.versionDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
-                    minute="2-digit" second="2-digit" ></lightning-formatted-date-time>
-                </h2>
+                <div class="slds-clearfix" >
+                    <lightning-button if:false={oneHistoryItem.isVersionOne} class="slds-float_right" label="Revert" title="Revert" onclick={handleRevertVersion} value={oneHistoryItem.version} ></lightning-button>
+                    <h2>
+                        Version Date: <lightning-formatted-date-time value={oneHistoryItem.versionDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                        minute="2-digit" second="2-digit" ></lightning-formatted-date-time>
+                    </h2>
+                </div>
                 <div class="slds-m-top_x-small" >
                     <div if:true={oneHistoryItem.isVersionOne} class="slds-align_absolute-center" >
                         Published.
                     </div>
-                    <!--todo: datatable lwc-->
                     <table if:true={oneHistoryItem.hasChanges} class="slds-table slds-table_bordered slds-table_cell-buffer" role="grid" >
                         <thead>
                             <tr class="slds-text-title--caps">
@@ -56,15 +58,15 @@
                                     </td>
                                 </tr>
                             </template>
-</tbody>
-</table>
-<div if:false={oneHistoryItem.isVersionOne}>
-    <div if:false={oneHistoryItem.hasChanges} class="slds-align_absolute-center">
-        No Changes.
-    </div>
-</div>
-</div>
-</lightning-tab>
-</template>
-</lightning-tabset>
+                        </tbody>
+                    </table>
+                    <div if:false={oneHistoryItem.isVersionOne}>
+                        <div if:false={oneHistoryItem.hasChanges} class="slds-align_absolute-center">
+                            No Changes.
+                        </div>
+                    </div>
+                </div>
+            </lightning-tab>
+        </template>
+    </lightning-tabset>
 </template>

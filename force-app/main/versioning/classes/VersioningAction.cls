@@ -34,7 +34,7 @@ public with sharing class VersioningAction {
         return stringOfAllFields;
     }
 
-    @InvocableMethod(label='Publish Record' description='Publish Record and Increase Version')
+    @InvocableMethod(label='Increase Version' description='Publish Record and Increase Version')
     public static void versioning(List<Id> recordIdList) {
         // Only support single record
         Id theRecordId = recordIdList[0];
