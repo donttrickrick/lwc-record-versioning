@@ -6,9 +6,9 @@ This repo implements the functions of pulishing, versioning and reverting record
 
 Pull the repo on your machine, then run these commands with SFDX:
 
-$ `sfdx force:org:create -f config/project-scratch-def.json --setalias lwcrecordversioning --durationdays 1 --setdefaultusername --json --loglevel fatal`
+$ `sfdx force:org:create -f config/project-scratch-def.json --setalias lwcrecordversioning --durationdays 1 --setdefaultusername`
 
-$ `sfdx force:source:push --json --loglevel fatal --forceoverwrite`
+$ `sfdx force:source:push --forceoverwrite`
 
 $ `sfdx force:data:tree:import -p data/data-plan.json`
 
