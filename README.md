@@ -53,7 +53,9 @@ force-app
         │   ├── RecordVersionaryTest.cls
         │   ├── RecordVersionaryTest.cls-meta.xml
         │   ├── VersioningAction.cls
-        │   └── VersioningAction.cls-meta.xml
+        │   ├── VersioningAction.cls-meta.xml
+        │   ├── VersioningActionTest.cls
+        │   └── VersioningActionTest.cls-meta.xml
         ├── flows
         │   └── Versioning.flow-meta.xml
         └── lwc
